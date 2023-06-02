@@ -1,0 +1,54 @@
+import pygame
+
+# Initialize Pygame
+pygame.init()
+
+# Set up the screen
+screen_width = 800
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("YouTube Animation")
+
+# Set up colors
+WHITE = (255, 255, 255)
+BLUE = (0, 0, 255)
+
+# Set up the animation parameters
+circle_radius = 50
+circle_x = screen_width // 2
+circle_y = screen_height // 2
+velocity_x = 5
+velocity_y = 5
+
+# Game loop
+running = True
+clock = pygame.time.Clock()
+
+while running:
+    # Handle events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Update animation
+    circle_x += velocity_x
+    circle_y += velocity_y
+
+    # Check for collision with screen edges
+    if circle_x + circle_radius > screen_width or circle_x - circle_radius < 0:
+        velocity_x *= -1
+    if circle_y + circle_radius > screen_height or circle_y - circle_radius < 0:
+        velocity_y *= -1
+
+    # Fill the screen with white color
+    screen.fill(WHITE)
+
+    # Draw the circle
+    pygame.draw.circle(screen, BLUE, (circle_x, circle_y), circle_radius)
+
+    # Update the screen
+    pygame.display.flip()
+    clock.tick(60)  # Limit the frame rate to 60 FPS
+
+# Quit the game
+pygame.quit()
